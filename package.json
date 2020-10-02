@@ -2,7 +2,7 @@
     "name": "contentpedia",
     "version": "1.0.0",
     "description": "An encyclopedia of all the guests of famous interviewers",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon server.js",
@@ -15,5 +15,6 @@
     },
     "devDependencies": {
         "nodemon": "^2.0.4"
-    }
+    },
+    "publishConfig": { "registry": "https://npm.pkg.github.com/" }
 }
