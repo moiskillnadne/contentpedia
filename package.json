@@ -1,11 +1,19 @@
 {
-  "name": "contentpedia",
-  "version": "1.0.0",
-  "description": "An encyclopedia of all the guests of famous interviewers",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Victor Ryabkov & Alexander Ruban",
-  "license": "ISC"
+    "name": "contentpedia",
+    "version": "1.0.0",
+    "description": "An encyclopedia of all the guests of famous interviewers",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon server.js",
+        "start": "node server.js"
+    },
+    "author": "Victor Ryabkov & Alexander Ruban",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    }
 }
