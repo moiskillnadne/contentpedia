@@ -11,10 +11,13 @@
     "author": "Victor Ryabkov & Alexander Ruban",
     "license": "ISC",
     "dependencies": {
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "mongodb": "^3.6.2"
     },
     "devDependencies": {
         "nodemon": "^2.0.4"
     },
-    "publishConfig": { "registry": "https://npm.pkg.github.com/" }
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    }
 }
