@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const Mongo = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 
 const PORT = 6587;
-const DB_URL = 'mongodb+srv://victor_ryabkov:Ryabkov2607.@contentpedia.k4rqg.mongodb.net/contentpedia_dev?retryWrites=true&w=majority';
+const DB_URL = `mongodb+srv://${process.env.DB_LOGIN}:${process.env.DB_PASS}@contentpedia.k4rqg.mongodb.net/contentpedia_dev?retryWrites=true&w=majority`;
 
 
 
