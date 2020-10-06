@@ -20,25 +20,26 @@ We must send a **POST** request JSON in body to /test/db
 }
 ```
 
-_If item was added successfully you got status code **200** and json with **success** message_
+>If item was added successfully you got status code **200** and json with **success** message
 
-_If item wasn't  added you got status code **500** and json with **error** message_
+>If item wasn't  added you got status code **500** and json with **error** message
 
 ### For getting all test items in test DataBase
 We must send a **GET** request to /test/db
 
-_If entries were found you got status code **200** and json with **array of items**_
+>If entries were found you got status code **200** and json with **array of items**
 
-_If the request was sent correctly, but no records were found on the request, then you will receive the status code **204** and a message stating that **records were not found**_
+>If the request was sent correctly, but no records were found on the request, then you will receive the status code **204** and a message stating that **records were not found**
 
-_If going some error you will receive the **status code 500 with error message**_
+>If going some error you will receive the **status code 500 with error message**
 
 ### For deleting test item in test DataBase
 We must send a **DELETE** request to /test/db/:**item-id**
 
-_If item was deleted successfully you got status code **200** and json with **success** message_
 
-_If item wasn't  deleted you got status code **500** and json with **error** message_
+>If item was deleted successfully you got status code **200** and json with **success** message
+
+>If item wasn't  deleted you got status code **500** and json with **error** message
 
 ### For updating test item in test DataBase
 We must send a **PATCH** request JSON in body to /test/db/:**item-id**
