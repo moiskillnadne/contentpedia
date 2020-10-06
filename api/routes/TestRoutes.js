@@ -12,7 +12,22 @@ router.get('/', (req, res) => {
 // Database test
 router.route('/db')
     .get((req, res) => {
-
+        TestSchema.find()
+            .exec()
+            .then(items => {
+                if (items.length > 0) {
+                    res.status(200).json(items);
+                } else {
+                    res.status(204).json({
+                        message: 'Items not found'
+                    });
+                }
+            })
+            .catch(err => {
+                res.status(500).json({
+                    error: err
+                })
+            });
     })
     .post((req, res) => {
         console.log(req.body);
@@ -24,15 +39,51 @@ router.route('/db')
         });
         testItem.save()
             .then(result => {
-                console.log(result);
                 res.status(200).json({
                     success: result
                 })
             })
             .catch(err => {
-                console.log(err);
+                res.status(500).json({
+                    error: err
+                })
             });
+    })
 
+router.route('/db/:testItemId')
+    .patch((req, res) => {
+        const id = req.params.testItemId;
+        let updateOps = {};
+        for (const ops of req.body) {
+            updateOps[ops.propName] = ops.value;
+        }
+        TestSchema.updateOne({ _id: id }, { $set: updateOps })
+            .exec()
+            .then(result => {
+                res.status(200).json({
+                    success: result
+                });
+            })
+            .catch(err => {
+                res.status(500).json({
+                    error: err
+                });
+            });
+    })
+    .delete((req, res) => {
+        const id = req.params.testItemId;
+        TestSchema.remove({ _id: id })
+            .exec()
+            .then(result => {
+                res.status(200).json({
+                    success: result
+                });
+            })
+            .catch(err => {
+                res.status(500).json({
+                    error: err
+                });
+            });
     })
 
 router.post('/', (req, res) => {});
