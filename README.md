@@ -74,3 +74,7 @@ We must send a **PATCH** request JSON in body to /test/db/:**item-id**
     }
 ]
 ```
+
+>If item was added successfully you got status code **200** and json with **success** message
+
+>If item wasn't  added you got status code **500** and json with **error** message
