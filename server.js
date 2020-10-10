@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -13,9 +14,10 @@ const PORT = 6587;
 const TestRoutes = require('./api/routes/TestRoutes');
 
 
-
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
+
 
 // Routes
 app.use('/test/', TestRoutes);
