@@ -31,21 +31,30 @@ router.route('/db')
             });
     })
     .post((req, res) => {
-        console.log(req.body);
+        const body = req.body;
         const videoDetails = new VideoDetailsSchema({
             _id: new mongoose.Types.ObjectId(),
             channel: {
-                name: req.body.channel.name,
+                name: body.channel.name,
             },
             video: {
-                name: req.body.video.name,
-                url: req.body.video.url,
-                views: req.body.video.views
+                name: body.video.name,
+                url: body.video.url,
+                views: body.video.views
             },
             guest: {
-                name: req.body.guest.name,
-                age: req.body.guest.age,
+                name: body.guest.name,
+                age: body.guest.age,
+                profession: body.guest.profession,
+                recommendation: {
+                    videoContent: body.guest.recommendation.videoContent,
+                    audioContent: body.guest.recommendation.audioContent,
+                    textContent: body.guest.recommendation.textContent,
+                },
             },
+            general: {
+                description: body.general.description
+            }
         });
         videoDetails.save()
             .then(result => {
@@ -59,6 +68,27 @@ router.route('/db')
                 })
             });
     })
+
+router.delete('/db/deleteAll/:password', (req, res) => {
+    const pass = req.params.password;
+    if (process.env.DB_PASS === pass) {
+        VideoDetailsSchema.deleteMany()
+            .then(result => {
+                res.status(200).json({
+                    success: result
+                })
+            })
+            .catch(err => {
+                res.status(500).json({
+                    error: err
+                })
+            })
+    } else {
+        res.status(422).json({
+            error: 'Password is incorrect'
+        })
+    }
+})
 
 router.route('/db/:testItemId')
     .patch((req, res) => {
@@ -96,7 +126,7 @@ router.route('/db/:testItemId')
             });
     })
 
-router.post('/', (req, res) => {});
+
 
 
 module.exports = router;
