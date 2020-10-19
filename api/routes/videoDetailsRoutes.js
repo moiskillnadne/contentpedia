@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 
 const VideoDetailsSchema = require('../models/VideoDetails');
@@ -54,7 +55,8 @@ router.route('/db')
             },
             general: {
                 description: body.general.description
-            }
+            },
+            timestamp: moment().format('MMMM Do YYYY, h:mm a')
         });
         videoDetails.save()
             .then(result => {

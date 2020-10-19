@@ -35,7 +35,8 @@ const videoDetails = mongoose.Schema({
     },
     general: {
         description: { type: String, default: "" }
-    }
+    },
+    timestamp: String
 });
 
 
