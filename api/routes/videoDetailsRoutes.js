@@ -93,6 +93,21 @@ router.delete('/db/deleteAll/:password', (req, res) => {
 })
 
 router.route('/db/:testItemId')
+    .get((req, res) => {
+        const id = req.params.testItemId;
+        VideoDetailsSchema.findById(id)
+            .exec()
+            .then(result => {
+                res.status(200).json({
+                    success: result
+                })
+            })
+            .catch(err => {
+                res.status(404).json({
+                    error: err
+                })
+            })
+    })
     .patch((req, res) => {
         const id = req.params.testItemId;
         let updateOps = {};

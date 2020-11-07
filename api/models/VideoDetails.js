@@ -9,32 +9,80 @@ const videoDetails = mongoose.Schema({
     video: {
         name: String,
         url: String,
-        previewUrl: { type: String, default: "" },
+        previewUrl: {
+            type: String,
+            default: ""
+        },
     },
     guest: {
         name: String,
         age: Number,
-        profession: { type: String, default: "" },
+        profession: {
+            type: String,
+            default: ""
+        },
         recommendation: {
             videoContent: [{
-                type: { type: String },
+                type: {
+                    type: String
+                },
                 name: String,
-                timecode: String
+                timecode: String,
+                url: {
+                    type: String,
+                    default: ""
+                },
+                comment: {
+                    type: String,
+                    default: ""
+                },
+                tags: [
+                    "favorites" | "mention" | "notFavorites"
+                ]
             }],
             audioContent: [{
-                type: { type: String },
+                type: {
+                    type: String
+                },
                 name: String,
-                timecode: String
+                timecode: String,
+                url: {
+                    type: String,
+                    default: ""
+                },
+                comment: {
+                    type: String,
+                    default: ""
+                },
+                tags: [
+                    "favorites" | "mention" | "notFavorites"
+                ]
             }],
             textContent: [{
-                type: { type: String },
+                type: {
+                    type: String
+                },
                 name: String,
-                timecode: String
+                timecode: String,
+                url: {
+                    type: String,
+                    default: ""
+                },
+                comment: {
+                    type: String,
+                    default: ""
+                },
+                tags: [
+                    "favorites" | "mention" | "notFavorites"
+                ]
             }],
         },
     },
     general: {
-        description: { type: String, default: "" }
+        description: {
+            type: String,
+            default: ""
+        }
     },
     timestamp: String
 });
