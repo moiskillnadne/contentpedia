@@ -41,7 +41,7 @@ router.route('/db')
             video: {
                 name: body.video.name,
                 url: body.video.url,
-                views: body.video.views
+                previewUrl: body.video.previewUrl
             },
             guest: {
                 name: body.guest.name,
@@ -114,7 +114,11 @@ router.route('/db/:testItemId')
         for (const ops of req.body) {
             updateOps[ops.propName] = ops.value;
         }
-        VideoDetailsSchema.updateOne({ _id: id }, { $set: updateOps })
+        VideoDetailsSchema.updateOne({
+                _id: id
+            }, {
+                $set: updateOps
+            })
             .exec()
             .then(result => {
                 res.status(200).json({
@@ -129,7 +133,9 @@ router.route('/db/:testItemId')
     })
     .delete((req, res) => {
         const id = req.params.testItemId;
-        VideoDetailsSchema.remove({ _id: id })
+        VideoDetailsSchema.remove({
+                _id: id
+            })
             .exec()
             .then(result => {
                 res.status(200).json({

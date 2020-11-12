@@ -9,10 +9,7 @@ const videoDetails = mongoose.Schema({
     video: {
         name: String,
         url: String,
-        previewUrl: {
-            type: String,
-            default: ""
-        },
+        previewUrl: String,
     },
     guest: {
         name: String,
