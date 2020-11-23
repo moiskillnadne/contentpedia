@@ -1,155 +1,164 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
-const moment = require('moment');
+const express = require('express')
+const router = express.Router()
+const mongoose = require('mongoose')
+const moment = require('moment')
 
+const VideoDetailsSchema = require('../models/VideoDetails')
 
-const VideoDetailsSchema = require('../models/VideoDetails');
+const utils = require('../../helper/utils')
 
 router.get('/', (req, res) => {
-    res.send('hello server /api/');
-});
+    res.send('hello server /api/')
+})
 
-
-// Database test
-router.route('/db')
+router
+    .route('/db')
     .get((req, res) => {
+        console.log('Sending video list form dev server..')
         VideoDetailsSchema.find()
             .exec()
-            .then(items => {
+            .then((items) => {
                 if (items.length > 0) {
-                    res.status(200).json(items);
+                    res.status(200).json(items)
                 } else {
                     res.status(204).json({
-                        message: 'Items not found'
-                    });
+                        message: 'Items not found',
+                    })
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 res.status(500).json({
-                    error: err
+                    error: err,
                 })
-            });
+            })
     })
     .post((req, res) => {
-        const body = req.body;
+        const {
+            channel,
+            video,
+            guest,
+            recommendation
+        } = req.body
+        console.log(req.body)
+        const videoID = utils.getVideoIDFromUrl(video.url)
         const videoDetails = new VideoDetailsSchema({
             _id: new mongoose.Types.ObjectId(),
             channel: {
-                name: body.channel.name,
+                name: channel.name,
             },
             video: {
-                name: body.video.name,
-                url: body.video.url,
-                previewUrl: body.video.previewUrl
+                name: video.name,
+                url: video.url,
+                previewUrl: utils.formatterToPreviewLink(videoID),
             },
             guest: {
-                name: body.guest.name,
-                age: body.guest.age,
-                profession: body.guest.profession,
-                recommendation: {
-                    videoContent: body.guest.recommendation.videoContent,
-                    audioContent: body.guest.recommendation.audioContent,
-                    textContent: body.guest.recommendation.textContent,
-                },
+                name: guest.name,
+                age: guest.age || null,
+                profession: guest.profession || null,
             },
-            general: {
-                description: body.general.description
+            recommendation: {
+                videoContent: recommendation.videoContent,
+                audioContent: recommendation.audioContent,
+                textContent: recommendation.textContent,
             },
-            timestamp: moment().format('MMMM Do YYYY, h:mm a')
-        });
-        videoDetails.save()
-            .then(result => {
+            timestamp: moment().format('MMMM Do YYYY, h:mm a'),
+        })
+        console.log(videoDetails)
+        videoDetails
+            .save()
+            .then((result) => {
+                console.log('Posting new video via dev server..')
                 res.status(200).json({
-                    success: result
+                    success: result,
                 })
             })
-            .catch(err => {
+            .catch((err) => {
+                console.log('Posting new video was failed!')
                 res.status(500).json({
-                    error: err
+                    error: err,
+                    msg: 'Not saved',
                 })
-            });
+            })
     })
 
 router.delete('/db/deleteAll/:password', (req, res) => {
-    const pass = req.params.password;
+    const pass = req.params.password
     if (process.env.DB_PASS === pass) {
         VideoDetailsSchema.deleteMany()
-            .then(result => {
+            .then((result) => {
                 res.status(200).json({
-                    success: result
+                    success: result,
                 })
             })
-            .catch(err => {
+            .catch((err) => {
                 res.status(500).json({
-                    error: err
+                    error: err,
                 })
             })
     } else {
         res.status(422).json({
-            error: 'Password is incorrect'
+            error: 'Password is incorrect',
         })
     }
 })
 
-router.route('/db/:testItemId')
+router
+    .route('/db/:testItemId')
     .get((req, res) => {
-        const id = req.params.testItemId;
+        const id = req.params.testItemId
         VideoDetailsSchema.findById(id)
             .exec()
-            .then(result => {
+            .then((result) => {
                 res.status(200).json({
-                    success: result
+                    success: result,
                 })
             })
-            .catch(err => {
+            .catch((err) => {
                 res.status(404).json({
-                    error: err
+                    error: err,
                 })
             })
     })
     .patch((req, res) => {
-        const id = req.params.testItemId;
-        let updateOps = {};
+        const id = req.params.testItemId
+        let updateOps = {}
         for (const ops of req.body) {
-            updateOps[ops.propName] = ops.value;
+            updateOps[ops.propName] = ops.value
         }
         VideoDetailsSchema.updateOne({
-                _id: id
+                _id: id,
             }, {
-                $set: updateOps
-            })
+                $set: updateOps,
+            }, )
             .exec()
-            .then(result => {
+            .then((result) => {
                 res.status(200).json({
-                    success: result
-                });
+                    success: result,
+                })
             })
-            .catch(err => {
+            .catch((err) => {
                 res.status(500).json({
-                    error: err
-                });
-            });
+                    error: err,
+                })
+            })
     })
     .delete((req, res) => {
-        const id = req.params.testItemId;
+        const id = req.params.testItemId
         VideoDetailsSchema.remove({
-                _id: id
+                _id: id,
             })
             .exec()
-            .then(result => {
+            .then((result) => {
+                console.log('Item was deleted successfully!');
                 res.status(200).json({
-                    success: result
-                });
+                    success: result,
+                })
             })
-            .catch(err => {
+            .catch((err) => {
                 res.status(500).json({
-                    error: err
-                });
-            });
+                    error: err,
+                })
+            })
     })
 
-
-
-
-module.exports = router;
+module.exports = router

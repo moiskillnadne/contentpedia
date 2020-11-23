@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 
 const videoDetails = mongoose.Schema({
     _id: mongoose.SchemaTypes.ObjectId,
@@ -13,76 +12,42 @@ const videoDetails = mongoose.Schema({
     },
     guest: {
         name: String,
-        age: Number,
-        profession: {
-            type: String,
-            default: ""
-        },
-        recommendation: {
-            videoContent: [{
-                type: {
-                    type: String
-                },
-                name: String,
-                timecode: String,
-                url: {
-                    type: String,
-                    default: ""
-                },
-                comment: {
-                    type: String,
-                    default: ""
-                },
-                tags: [
-                    "favorites" | "mention" | "notFavorites"
-                ]
-            }],
-            audioContent: [{
-                type: {
-                    type: String
-                },
-                name: String,
-                timecode: String,
-                url: {
-                    type: String,
-                    default: ""
-                },
-                comment: {
-                    type: String,
-                    default: ""
-                },
-                tags: [
-                    "favorites" | "mention" | "notFavorites"
-                ]
-            }],
-            textContent: [{
-                type: {
-                    type: String
-                },
-                name: String,
-                timecode: String,
-                url: {
-                    type: String,
-                    default: ""
-                },
-                comment: {
-                    type: String,
-                    default: ""
-                },
-                tags: [
-                    "favorites" | "mention" | "notFavorites"
-                ]
-            }],
-        },
+        age: String | null,
+        profession: String | null,
     },
-    general: {
-        description: {
-            type: String,
-            default: ""
-        }
+    recommendation: {
+        videoContent: [{
+            type: {
+                type: String,
+            },
+            name: String,
+            timecode: String,
+            url: String || null,
+            comment: String || null,
+            tags: "favorites" | "mention" | "notFavorites",
+        }, ],
+        audioContent: [{
+            type: {
+                type: String,
+            },
+            name: String,
+            timecode: String,
+            url: String || null,
+            comment: String || null,
+            tags: "favorites" | "mention" | "notFavorites",
+        }, ],
+        textContent: [{
+            type: {
+                type: String,
+            },
+            name: String,
+            timecode: String,
+            url: String || null,
+            comment: String || null,
+            tags: "favorites" | "mention" | "notFavorites",
+        }, ],
     },
-    timestamp: String
+    timestamp: String,
 });
 
-
-module.exports = mongoose.model('videoDetails', videoDetails);;
+module.exports = mongoose.model("videoDetails", videoDetails);
